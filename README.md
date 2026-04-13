@@ -1,16 +1,45 @@
-# React + Vite
+# Firebase Deployment Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Step 1: Install Firebase CLI
+```bash
+npm install -g firebase-tools
+```
 
-Currently, two official plugins are available:
+## Step 2: Login to Firebase
+```bash
+firebase login
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Step 3: Navigate to Project Folder
+```bash
+cd your-project-folder
+```
 
-## React Compiler
+## Step 4: Initialize Firebase
+```bash
+firebase init
+```
+- Select **Hosting**
+- Create a new project or use existing project: `profile-ravi`
+- Public directory: `dist`
+- Configure as single-page app: `Yes`
+- Set up GitHub workflow: `Yes`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Step 5: Enable Required Google APIs
+- Go to [console.cloud.google.com](https://console.cloud.google.com)
+- Select project `profile-ravi`
+- Search and enable **IAM Service Account Credentials API**
 
-## Expanding the ESLint configuration
+## Step 6: Build the Project
+```bash
+npm run build
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Step 7: Deploy to Firebase
+```bash
+firebase deploy
+```
+
+## Live Links
+- Project Console: https://console.firebase.google.com/project/profile-ravi/overview
+- Hosting URL: https://profile-ravi.web.app
