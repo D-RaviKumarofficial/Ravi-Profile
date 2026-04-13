@@ -1,0 +1,81 @@
+   RA VI KUMAR D  
+Cuddalore, TamilNadu.  
+Email      :  ravikumar.offical2003@gmail.com  
+Phone      :  7667009461  
+      GitHub    :  https://github.com/D-RaviKumarofficial  
+      LinkedIn :  www.linkedin.com/in/ravi-kumar-d-535a98267     
+OBJECTIVE:   
+AI/ML Engineer specializing in developing and fine -tuning machine learning and deep learning models for 
+real-world applications. Skilled in building and optimizing AI -driven solutions, including generative AI 
+integrations and intelligent features. Strong in data handling, model optimization, and deployment of scalable 
+AI systems. Highly adaptable, analytical, and passionate about leveraging advanced AI technologies in a 
+growth-oriented organization.   
+   
+WORK EXPERIENCE: Total Experience - 1.7 years  
+Ava Software Private Limited| AUGUST -2024 - Present           
+Title: Thryve Labs – Virtual Assistant  
+Description:   
+• Built and deployed intelligent AI systems that analyse user intent and generate real -time, 
+meaningful responses using foundation models. Implemented a Strands agent to dynamically 
+invoke client-provided API endpoints based on query intent, enabling accurate data retrieval 
+and seamless backend integration. Architected cloud-native AI services on AWS, automating 
+infrastructure with Terraform and utilizing Amazon Bedrock for scalable and efficient model 
+execution.  
+ 
+      Title: Chaotic– Character Enhancement System 
+Description:   
+• Developed an AI -powered image enhancement system to restore and upgrade low -quality 
+anime character visuals from legacy episode assets. Leveraged the Qwen (20B parameter) 
+model to generate high-resolution images and perform character modifications based on user-
+defined prompts. Implemented prompt -driven transformations to dynamically alter character 
+features while preserving original identity. Designed a scalable pipeline for pr ocessing and 
+storing generated outputs in AWS S3, enabling efficient retrieval and content management for 
+large media datasets.  
+ 
+             Software Developer | 01/12/2024 – 29/07/2025  
+   Title: CK Ticketing Tool   
+Description:   
+• Developed a custom ticketing and workflow system with dynamic forms, configurable 
+workflows, and hierarchical multi-level approvals, triggering automated email notifications at 
+each stage. Utilized a MySQL database for persistent ticket data storage and fu ture analytics 
+and reporting.  
+ 
+                
+             
+           Title: Luminar (Task Management System)  
+      Description:  
+• Developed a role -based project management platform with task assignment, file 
+uploads, and performance tracking. Integrated AWS S3 for secure storage and OAuth-
+based authentication. Automated task synchronization using CRON jobs and external 
+APIs, and built a centralized review module with real-time monitoring, feedback, and 
+full permission control. 
+ 
+ 
+       ACADEMIC PROFILE:   
+   
+Master of Science in Information Technology(M.Sc.IT)   
+St.Joseph’s College of Arts & Science(Autonomous),Cuddalore, 
+ Graduation Year: 2023-25 | Percentage: 80%   
+   
+Bachelor of Computer Applications(B.C.A)   
+St.Joseph’s College of Arts & Science (Autonomous),Cuddalore, 
+ Graduation Year: 2020-23| Percentage: 79%   
+   
+Higher Secondary   
+Lakshmi chordia memorial matric.hr.sec.school  
+ Year: 2019-20 | Percentage:73%  
+   
+     TECHNICAL SKILLS:   
+   
+• Programming Language :  PHP, PYTHON  
+• Framework                       : Laravel , Fast Api 
+• Web Technologies             : HTML, CSS, JavaScript  
+• Databases                           : SQL, PostgreSQL, MySQL  
+• Cloud                                  : AWS , Terraform 
+• Tools                                    : GitHub, Visual Studio Code , Figma , Postman 
+• Ai Tools                               : Kiro, Amazon Q , Antigravity 
+• Operating Systems             : Window, Linux , Ubuntu 
+ 
+       DECLARATION:   
+I Here by declare that the above-mentioned information is accurate to the best of my 
+knowledge and belief. 
