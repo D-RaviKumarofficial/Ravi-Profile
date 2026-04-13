@@ -116,7 +116,7 @@ export default function Chatbot() {
       {open && (
         <div className="chatbot-window">
           <div className="chatbot-header">
-            <span>💬 Chat with Ravi's AI</span>
+            <span>💬 Chat with Ravi's Assitant</span>
             <button onClick={() => setOpen(false)} className="chatbot-close">✕</button>
           </div>
           <div className="chatbot-messages">
