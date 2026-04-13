@@ -38,17 +38,19 @@ function getResponse(input) {
     return { message: greetingReply, options: chatbotData.start.options };
   }
 
+  // Exact key match (button clicks)
   if (chatbotData.nodes[input]) {
     return { message: chatbotData.nodes[input].message, options: chatbotData.nodes[input].options };
   }
 
-  for (const fb of chatbotData.fallback) {
-    if (fb.keywords.some(k => text.includes(k))) {
-      return { message: fb.answer, options: chatbotData.start.options };
+  // Pattern match (free-typed input)
+  for (const node of Object.values(chatbotData.nodes)) {
+    if (node.patterns?.some(p => p.test(text))) {
+      return { message: node.message, options: node.options };
     }
   }
 
-  return { message: chatbotData.default.answer, options: chatbotData.start.options };
+  return { message: chatbotData.fallback.answer, options: chatbotData.start.options };
 }
 
 export default function Chatbot() {
