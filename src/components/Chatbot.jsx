@@ -27,7 +27,7 @@ function getGreetingResponse(text) {
   if (t.includes('how are you') || t.includes('how r you') || t.includes('how are u')) {
     return `${tod}! 😊 I'm doing great and ready to help. I'm here to tell you all about Ravi Kumar D — his skills, projects, and experience. How can I assist you?`;
   }
-  return `${tod}! 👋 Great to have you here. I'm Ravi's AI assistant — feel free to explore his profile, projects, or reach out. How can I help you today?`;
+  return `${tod}! 👋 Great to have you here. I'm Ravi's AI assistant — your go-to guide for everything about Ravi Kumar D.\n\nFeel free to explore his skills, projects, or experience. Want to reach him directly?\n📧 ravikumar.offical2003@gmail.com\n📞 7667009461\n\nHow can I help you today?`;
 }
 
 function getResponse(input) {
