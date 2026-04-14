@@ -63,7 +63,7 @@ NeuralHub significantly reduced the time-to-experiment for the internal AI team,
       {
         id: 'ck-ticketing',
         title: 'CK Ticketing Tool',
-        type: 'Client Engagement',
+        type: 'Internal Engagement',
         shortDesc: 'Custom ticketing system with dynamic workflows, multi-level approvals and automated notifications.',
         description: `CK Ticketing Tool is a fully custom-built internal ticketing and workflow management system developed for Hema's Enterprise Private Limited to streamline their operational request handling and approval processes.
 
@@ -81,7 +81,7 @@ The frontend was built using Bootstrap for a clean, responsive UI and vanilla Ja
       {
         id: 'luminar',
         title: 'Luminar – Task Management System',
-        type: 'Client Engagement',
+        type: 'Internal Engagement',
         shortDesc: 'Role-based project management platform with AWS S3 storage, OAuth auth and real-time monitoring.',
         description: `Luminar is a comprehensive role-based project and task management platform developed for Hema's Enterprise Private Limited to centralize team collaboration, task tracking, and performance oversight across multiple projects and departments.
 

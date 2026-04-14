@@ -9,7 +9,7 @@ const Experience = () => {
           <h2 className="section-title">Professional Experience</h2>
         </div>
         
-        <div className="projects-grid" style={{ marginTop: '3rem', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+        <div className="projects-grid" style={{ marginTop: '3rem' }}>
           
           <div className="project-card">
             <div className="project-content" style={{ padding: '2rem' }}>
