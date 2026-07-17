@@ -4,7 +4,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding-top: 80px; /* offset for fixed header */
+  padding-top: 0;
 }
 
 /* Background effects */
