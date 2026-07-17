@@ -59,39 +59,143 @@ body {
 }
 
 /* ========================================
-   APP FRAME - Hubtown Style Border
+   APP FRAME - Chamfer Border
    ======================================== */
 
+.app-frame-wrapper {
+  position: fixed;
+  inset: 0.625rem;
+  z-index: 0;
+}
+
+@media (min-width: 769px) {
+  .app-frame-wrapper {
+    inset: 2.5rem;
+  }
+}
+
+/* Inner frame — chamfer top-left only, all other corners square */
 .app-frame {
-  position: relative;
-  width: calc(100% - 0.625rem * 2);
-  height: calc(100dvh - 0.625rem * 2);
-  max-height: calc(100dvh - 0.625rem * 2);
-  margin: 0.625rem;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   background: var(--bg-dark);
+  clip-path: polygon(
+    28px 0%,
+    100% 0%,
+    100% 100%,
+    0% 100%,
+    0% 28px
+  );
 }
 
 @media (min-width: 769px) {
   .app-frame {
-    width: calc(100% - 2.5rem * 2);
-    height: calc(100dvh - 2.5rem * 2);
-    max-height: calc(100dvh - 2.5rem * 2);
-    margin: 2.5rem;
+    clip-path: polygon(
+      40px 0%,
+      100% 0%,
+      100% 100%,
+      0% 100%,
+      0% 40px
+    );
   }
 }
 
-/* SVG-style border overlay */
-.app-frame-border {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-  z-index: 10;
+/* Remove pseudo-element approach — using individual border divs instead */
+.app-frame-wrapper::before {
+  display: none;
 }
 
-[data-theme="light"] .app-frame-border {
-  border-color: rgba(0, 0, 0, 0.1);
+/* 4-side border drawn as individual absolutely-positioned lines */
+/* These sit on the wrapper (outside the clipped frame) so they're never clipped */
+
+/* Top border — starts after the chamfer cut */
+.frame-border-top {
+  position: absolute;
+  top: 0;
+  left: 28px;
+  right: 0;
+  height: 1.5px;
+  background: rgba(0, 240, 255, 0.6);
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Right border — full height */
+.frame-border-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5px;
+  bottom: 0;
+  background: rgba(0, 240, 255, 0.6);
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Bottom border — full width */
+.frame-border-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: rgba(0, 240, 255, 0.6);
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Left border — starts after the chamfer cut */
+.frame-border-left {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  width: 1.5px;
+  bottom: 0;
+  background: rgba(0, 240, 255, 0.6);
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Chamfer diagonal line — connects top-left cut */
+.frame-border-chamfer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 50;
+  overflow: visible;
+}
+
+.frame-border-chamfer line {
+  stroke: rgba(0, 240, 255, 0.6);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.frame-border-chamfer .chamfer-desktop {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .frame-border-top {
+    left: 40px;
+  }
+  .frame-border-left {
+    top: 40px;
+  }
+  .frame-border-chamfer {
+    width: 56px;
+    height: 56px;
+  }
+  .frame-border-chamfer .chamfer-mobile {
+    display: none;
+  }
+  .frame-border-chamfer .chamfer-desktop {
+    display: block;
+  }
 }
 
 .app-content {

@@ -36,8 +36,7 @@ const Contact = () => {
             <a href="https://github.com/D-RaviKumarofficial" target="_blank" rel="noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/ravi-kumar-d-535a98267" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
-          <p>Designed and Built by Ravi</p>
-        </div>
+          </div>
       </footer>
     </>
   );

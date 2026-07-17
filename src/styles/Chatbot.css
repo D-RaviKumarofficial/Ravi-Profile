@@ -1,6 +1,6 @@
 .chatbot-wrapper {
   position: fixed;
-  bottom: 1.25rem;
+  bottom: 4.5rem;
   right: 1.25rem;
   z-index: 9999;
   display: flex;
@@ -11,8 +11,8 @@
 
 @media (min-width: 769px) {
   .chatbot-wrapper {
-    bottom: 3rem;
-    right: 3rem;
+    bottom: 6.9rem;
+    right: 4rem;
   }
 }
 

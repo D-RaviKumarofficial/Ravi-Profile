@@ -14,7 +14,7 @@ const navItems = [
 const hoverAudio = new Audio(hoverSound);
 hoverAudio.volume = 0.3;
 
-const Sidebar = ({ theme, toggleTheme, soundOn }) => {
+const Sidebar = ({ soundOn }) => {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -27,14 +27,24 @@ const Sidebar = ({ theme, toggleTheme, soundOn }) => {
   const handleNavClick = useCallback((href) => {
     setMobileOpen(false);
     const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    const container = document.querySelector('.app-content');
+    if (el && container) {
+      container.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
     }
   }, []);
 
   useEffect(() => {
+    const scrollContainer = document.querySelector('.app-content');
+    if (!scrollContainer) return;
+
     const handleScroll = () => {
-      const scrollPos = window.scrollY + window.innerHeight / 3;
+      const scrollTop = scrollContainer.scrollTop;
+
+      if (scrollTop < 50) {
+        setActiveSection('home');
+        return;
+      }
+      const scrollPos = scrollTop + scrollContainer.clientHeight / 3;
       for (let i = navItems.length - 1; i >= 0; i--) {
         const section = document.getElementById(navItems[i].id);
         if (section && section.offsetTop <= scrollPos) {
@@ -44,9 +54,8 @@ const Sidebar = ({ theme, toggleTheme, soundOn }) => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+    return () => scrollContainer.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -74,22 +83,6 @@ const Sidebar = ({ theme, toggleTheme, soundOn }) => {
               <span className="sidebar-label">{item.label}</span>
             </a>
           ))}
-        </div>
-
-        <div className="sidebar-bottom">
-          <button
-            className="sidebar-theme-btn"
-            onClick={toggleTheme}
-            onMouseEnter={playHover}
-            aria-label="Toggle theme"
-          >
-            <div className="sidebar-dot-wrapper">
-              <div className="sidebar-dot theme-dot">
-                <div className="sidebar-dot-fill" />
-              </div>
-            </div>
-            <span className="sidebar-label">{theme === 'dark' ? 'Light' : 'Dark'}</span>
-          </button>
         </div>
       </nav>
 
@@ -123,8 +116,8 @@ const Sidebar = ({ theme, toggleTheme, soundOn }) => {
               <span>{item.label}</span>
             </a>
           ))}
-          <button className="sidebar-mobile-theme" onClick={toggleTheme}>
-            {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          <button className="sidebar-mobile-theme" style={{display:'none'}} onClick={() => {}}>
+            Dark Mode
           </button>
         </div>
       </div>

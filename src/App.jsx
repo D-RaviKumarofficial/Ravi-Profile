@@ -17,7 +17,7 @@ import clickSound from './assets/game click.wav';
 const audio = new Audio(clickSound);
 audio.volume = 0.5;
 
-function Portfolio({ theme, toggleTheme, soundOn, toggleSound }) {
+function Portfolio({ soundOn, toggleSound }) {
   useEffect(() => {
     const handler = (e) => {
       if (!soundOn) return;
@@ -33,20 +33,32 @@ function Portfolio({ theme, toggleTheme, soundOn, toggleSound }) {
 
   return (
     <>
-      <Sidebar theme={theme} toggleTheme={toggleTheme} soundOn={soundOn} />
-      <div className="app-frame">
-        <div className="app-frame-border" />
-        <div className="app-content">
-          <main>
-            <Hero />
-            <FadeInSection delay={200}><About /></FadeInSection>
-            <FadeInSection delay={200}><Experience /></FadeInSection>
-            <FadeInSection delay={200}><Skills /></FadeInSection>
-            <FadeInSection delay={200}><Projects /></FadeInSection>
-          </main>
-          <FadeInSection delay={200}><Contact /></FadeInSection>
+      <Sidebar soundOn={soundOn} />
+      <div className="app-frame-wrapper">
+        {/* 4-side border — individual elements so clip-path never hides them */}
+        <div className="frame-border-top" />
+        <div className="frame-border-right" />
+        <div className="frame-border-bottom" />
+        <div className="frame-border-left" />
+        <svg className="frame-border-chamfer" aria-hidden="true">
+          {/* mobile: 28px cut */}
+          <line className="chamfer-mobile" x1="28" y1="0" x2="0" y2="28" />
+          {/* desktop: 40px cut */}
+          <line className="chamfer-desktop" x1="40" y1="0" x2="0" y2="40" />
+        </svg>
+        <div className="app-frame">
+          <div className="app-content">
+            <main>
+              <Hero />
+              <FadeInSection delay={200}><About /></FadeInSection>
+              <FadeInSection delay={200}><Experience /></FadeInSection>
+              <FadeInSection delay={200}><Skills /></FadeInSection>
+              <FadeInSection delay={200}><Projects /></FadeInSection>
+            </main>
+            <FadeInSection delay={200}><Contact /></FadeInSection>
+          </div>
+          <BottomBar soundOn={soundOn} toggleSound={toggleSound} />
         </div>
-        <BottomBar soundOn={soundOn} toggleSound={toggleSound} />
       </div>
       <Chatbot />
     </>
@@ -54,20 +66,13 @@ function Portfolio({ theme, toggleTheme, soundOn, toggleSound }) {
 }
 
 function App() {
-  const [theme, setTheme] = useState('dark');
   const [soundOn, setSoundOn] = useState(false);
-
-  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   const toggleSound = () => setSoundOn(prev => !prev);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Portfolio theme={theme} toggleTheme={toggleTheme} soundOn={soundOn} toggleSound={toggleSound} />} />
+        <Route path="/" element={<Portfolio soundOn={soundOn} toggleSound={toggleSound} />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
       </Routes>
     </BrowserRouter>
