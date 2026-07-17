@@ -33,7 +33,7 @@ function Portfolio({ theme, toggleTheme, soundOn, toggleSound }) {
 
   return (
     <>
-      <Sidebar theme={theme} toggleTheme={toggleTheme} />
+      <Sidebar theme={theme} toggleTheme={toggleTheme} soundOn={soundOn} />
       <div className="app-frame">
         <div className="app-frame-border" />
         <div className="app-content">

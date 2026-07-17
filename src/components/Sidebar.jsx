@@ -14,14 +14,15 @@ const navItems = [
 const hoverAudio = new Audio(hoverSound);
 hoverAudio.volume = 0.3;
 
-function playHover() {
-  hoverAudio.currentTime = 0;
-  hoverAudio.play().catch(() => {});
-}
-
-const Sidebar = ({ theme, toggleTheme }) => {
+const Sidebar = ({ theme, toggleTheme, soundOn }) => {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const playHover = () => {
+    if (!soundOn) return;
+    hoverAudio.currentTime = 0;
+    hoverAudio.play().catch(() => {});
+  };
 
   const handleNavClick = useCallback((href) => {
     setMobileOpen(false);
