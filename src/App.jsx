@@ -9,7 +9,6 @@ import Experience from './components/Experience';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
-import FadeInSection from './components/FadeInSection';
 import Chatbot from './components/Chatbot';
 import ProjectDetail from './components/ProjectDetail';
 import clickSound from './assets/game click.wav';
@@ -18,6 +17,8 @@ const audio = new Audio(clickSound);
 audio.volume = 0.5;
 
 function Portfolio({ soundOn, toggleSound }) {
+  const [activeSection, setActiveSection] = useState('home');
+
   useEffect(() => {
     const handler = (e) => {
       if (!soundOn) return;
@@ -33,29 +34,37 @@ function Portfolio({ soundOn, toggleSound }) {
 
   return (
     <>
-      <Sidebar soundOn={soundOn} />
+      <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} soundOn={soundOn} />
       <div className="app-frame-wrapper">
-        {/* 4-side border — individual elements so clip-path never hides them */}
+        {/* 4-side border */}
         <div className="frame-border-top" />
         <div className="frame-border-right" />
         <div className="frame-border-bottom" />
         <div className="frame-border-left" />
         <svg className="frame-border-chamfer" aria-hidden="true">
-          {/* mobile: 28px cut */}
           <line className="chamfer-mobile" x1="28" y1="0" x2="0" y2="28" />
-          {/* desktop: 40px cut */}
           <line className="chamfer-desktop" x1="40" y1="0" x2="0" y2="40" />
         </svg>
         <div className="app-frame">
           <div className="app-content">
-            <main>
+            <div className={`section-panel ${activeSection === 'home' ? 'section-active' : ''}`}>
               <Hero />
-              <FadeInSection delay={200}><About /></FadeInSection>
-              <FadeInSection delay={200}><Experience /></FadeInSection>
-              <FadeInSection delay={200}><Skills /></FadeInSection>
-              <FadeInSection delay={200}><Projects /></FadeInSection>
-            </main>
-            <FadeInSection delay={200}><Contact /></FadeInSection>
+            </div>
+            <div className={`section-panel ${activeSection === 'about' ? 'section-active' : ''}`}>
+              <About />
+            </div>
+            <div className={`section-panel ${activeSection === 'experience' ? 'section-active' : ''}`}>
+              <Experience />
+            </div>
+            <div className={`section-panel ${activeSection === 'skills' ? 'section-active' : ''}`}>
+              <Skills />
+            </div>
+            <div className={`section-panel ${activeSection === 'projects' ? 'section-active' : ''}`}>
+              <Projects />
+            </div>
+            <div className={`section-panel ${activeSection === 'contact' ? 'section-active' : ''}`}>
+              <Contact />
+            </div>
           </div>
           <BottomBar soundOn={soundOn} toggleSound={toggleSound} />
         </div>

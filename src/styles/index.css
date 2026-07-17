@@ -202,18 +202,29 @@ body {
   position: relative;
   z-index: 1;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden; /* no outer scroll */
 }
 
-/* Hide scrollbar on app-content */
-.app-content::-webkit-scrollbar {
-  display: none;
+/* Each section panel stacks in the same slot — only active one shows */
+.section-panel {
+  position: absolute;
+  inset: 0;
+  bottom: 56px; /* leave room for BottomBar */
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
-.app-content {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+.section-panel.section-active {
+  opacity: 1;
+  pointer-events: all;
 }
+
+/* Hide scrollbar inside panels */
+.section-panel::-webkit-scrollbar { display: none; }
+.section-panel { -ms-overflow-style: none; scrollbar-width: none; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
@@ -237,8 +248,7 @@ ul {
 }
 
 .section-padding {
-  padding: 6rem 0;
-  scroll-margin-top: 1rem;
+  padding: 4rem 0;
 }
 
 @media (max-width: 768px) {
@@ -246,8 +256,7 @@ ul {
     padding: 0 1.5rem;
   }
   .section-padding {
-    padding: 4rem 0;
-    scroll-margin-top: 1rem;
+    padding: 2.5rem 0;
   }
 }
 
