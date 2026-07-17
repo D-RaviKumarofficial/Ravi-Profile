@@ -12,29 +12,56 @@ import Contact from './components/Contact';
 import Chatbot from './components/Chatbot';
 import ProjectDetail from './components/ProjectDetail';
 import clickSound from './assets/game click.wav';
+import hoverSound from './assets/hover.mp3';
 
-const audio = new Audio(clickSound);
-audio.volume = 0.5;
+const clickAudio = new Audio(clickSound);
+clickAudio.volume = 0.5;
+
+const hoverAudio = new Audio(hoverSound);
+hoverAudio.volume = 0.25;
 
 function Portfolio({ soundOn, toggleSound }) {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    const handler = (e) => {
+    // Global click sound
+    const handleClick = (e) => {
       if (!soundOn) return;
       const tag = e.target.tagName;
       if (tag === 'A' || tag === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
+        clickAudio.currentTime = 0;
+        clickAudio.play().catch(() => {});
       }
     };
-    document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
+
+    // Global hover sound — fires once per element entry
+    let lastHovered = null;
+    const handleMouseOver = (e) => {
+      if (!soundOn) return;
+      const target = e.target.closest('a, button');
+      if (!target || target === lastHovered) return;
+      lastHovered = target;
+      hoverAudio.currentTime = 0;
+      hoverAudio.play().catch(() => {});
+    };
+    const handleMouseOut = (e) => {
+      const target = e.target.closest('a, button');
+      if (target === lastHovered) lastHovered = null;
+    };
+
+    document.addEventListener('click', handleClick);
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
+    return () => {
+      document.removeEventListener('click', handleClick);
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
+    };
   }, [soundOn]);
 
   return (
     <>
-      <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} soundOn={soundOn} />
+      <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
       <div className="app-frame-wrapper">
         {/* 4-side border */}
         <div className="frame-border-top" />

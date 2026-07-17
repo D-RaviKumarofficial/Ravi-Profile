@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../styles/Sidebar.css';
-import hoverSound from '../assets/hover.mp3';
 
 const navItems = [
   { label: 'Home',       id: 'home' },
@@ -11,17 +10,8 @@ const navItems = [
   { label: 'Contact',    id: 'contact' },
 ];
 
-const hoverAudio = new Audio(hoverSound);
-hoverAudio.volume = 0.3;
-
-const Sidebar = ({ activeSection, setActiveSection, soundOn }) => {
+const Sidebar = ({ activeSection, setActiveSection }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const playHover = () => {
-    if (!soundOn) return;
-    hoverAudio.currentTime = 0;
-    hoverAudio.play().catch(() => {});
-  };
 
   const handleNavClick = (id) => {
     setActiveSection(id);
@@ -38,7 +28,6 @@ const Sidebar = ({ activeSection, setActiveSection, soundOn }) => {
               key={item.id}
               className={`sidebar-item ${activeSection === item.id ? 'active' : ''}`}
               onClick={() => handleNavClick(item.id)}
-              onMouseEnter={playHover}
               aria-label={`Navigate to ${item.label}`}
             >
               <div className="sidebar-dot-wrapper">

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Projects.css';
 
@@ -102,47 +101,8 @@ The frontend was built using CodeIgniter for structured MVC architecture, with j
   },
 ];
 
-let modalShown = false;
-
 const Projects = () => {
-  const [modal, setModal] = useState(false);
-  const btnRef = useRef(null);
   const navigate = useNavigate();
-
-  const closeModal = () => {
-    setModal(false);
-    document.body.style.overflow = '';
-  };
-
-  useEffect(() => {
-    const tryShow = () => {
-      if (modalShown) return;
-      modalShown = true;
-      setModal(true);
-      document.body.style.overflow = 'hidden';
-    };
-
-    const section = document.getElementById('projects');
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) tryShow(); },
-      { threshold: 0.1 }
-    );
-    if (section) observer.observe(section);
-
-    const handleClick = (e) => {
-      if (e.target.closest('a[href="#projects"]')) tryShow();
-    };
-    document.addEventListener('click', handleClick);
-
-    return () => {
-      observer.disconnect();
-      document.removeEventListener('click', handleClick);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (modal && btnRef.current) btnRef.current.focus();
-  }, [modal]);
 
   return (
     <section id="projects" className="projects section-padding">
@@ -151,34 +111,13 @@ const Projects = () => {
           <h2 className="section-title">Projects</h2>
         </div>
 
-        {modal && createPortal(
-          <div className="modal-overlay" role="dialog" aria-modal="true">
-            <div className="modal-box">
-              <div className="modal-icon">🔒</div>
-              <h3 className="modal-title">Confidential Projects</h3>
-              <p className="modal-body">
-                These projects were developed as part of professional engagements for{' '}
-                <strong>Ava Software Private Limited</strong> and{' '}
-                <strong>Hema's Enterprise Private Limited</strong>.
-                Due to organizational confidentiality,{' '}
-                <strong>no source code or live demos</strong> are publicly available.
-              </p>
-              <button ref={btnRef} className="modal-btn" onClick={closeModal}>
-                Got it, Understood ✔
-              </button>
-            </div>
-          </div>,
-          document.body
-        )}
-
         {groups.map((group) => (
           <div className="project-group" key={group.org}>
             <div className="project-group-header">
               <span className="group-org-badge">{group.org}</span>
             </div>
             <div className="projects-grid">
-              {group.projects.map((project) => {
-                return (
+              {group.projects.map((project) => (
                 <div
                   className="project-card clickable"
                   key={project.id}
@@ -203,8 +142,7 @@ const Projects = () => {
                     <span className="project-view-more">View Details →</span>
                   </div>
                 </div>
-                );
-              })}
+              ))}
             </div>
           </div>
         ))}
