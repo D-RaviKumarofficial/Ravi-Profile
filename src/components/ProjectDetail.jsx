@@ -33,7 +33,7 @@ const ProjectDetail = () => {
         </button>
 
         <div className="detail-header">
-          <span className={`project-type ${project.type === 'Internal Project' ? 'internal' : 'client'}`}>
+          <span className={`project-type ${project.type === 'POC' ? 'poc' : 'prod'}`}>
             {project.type}
           </span>
           <span className="detail-org">{project.org}</span>

@@ -7,9 +7,51 @@ export const groups = [
     org: 'Ava Software Private Limited',
     projects: [
       {
+        id: 'poubelle-ai',
+        title: 'Poubelle.ai – Intelligent Waste Classification System',
+        type: 'PROD',
+        shortDesc: 'End-to-end AI waste classification system using YOLO with a bin recommendation engine.',
+        description: `Poubelle.ai is an intelligent waste classification system built for a production client engagement, designed to automatically identify and categorize waste items in real time. The system was developed as an end-to-end ML pipeline using YOLO-based object detection, achieving 88% accuracy on classification tasks with Amazon Bedrock as a fallback to support continuous learning from edge cases.
+
+A key feature of the platform is an automated monthly retraining pipeline. The pipeline applies data augmentation strategies and retrains the model on newly collected samples, improving classification accuracy by 6% while maintaining strict model versioning and evaluation metrics to track drift and performance over time.
+
+On top of the classification engine, an intelligent recommendation module was built to suggest the correct disposal bin for each item — choosing between recycle, compost, donate, or landfill categories. This recommendation system achieved a 91% user acceptance rate in production.
+
+The backend was designed to integrate the trained model with cloud infrastructure on AWS, ensuring the misclassification loop feeds predictions back into the training set to continuously harden model accuracy.`,
+        tech: ['YOLO', 'Amazon Bedrock', 'Python', 'Computer Vision', 'AWS', 'ML Pipeline'],
+      },
+      {
+        id: 'shoob-photography',
+        title: 'Shoob Photography – Background Removal & Enhancement',
+        type: 'PROD',
+        shortDesc: 'AI-powered background removal and image enhancement with pixel-perfect edge refinement.',
+        description: `Shoob Photography is a production-grade image processing system that performs intelligent background removal and image enhancement for professional photography workflows. The core segmentation engine is based on MODNet, a semantic segmentation model, trained using transfer learning to deliver 96% background removal accuracy on diverse photographic content.
+
+The computer vision pipeline was custom-engineered with PIL-based enhancement and edge artifact refinement techniques to produce pixel-perfect cutouts without halos or residual edge noise. This level of precision made the outputs directly usable in commercial photo editing and e-commerce workflows.
+
+To meet production-scale demand, the system was built as a scalable batch processing service supporting more than 100 concurrent requests, with the entire pipeline integrated into AWS Lambda and Amazon S3 for asynchronous job-based image processing.
+
+Inference was optimized through model quantization, which reduced latency by 40% and lowered serving costs by 35%, making the service both fast and cost-efficient at scale.`,
+        tech: ['MODNet', 'Python', 'PIL', 'OpenCV', 'AWS Lambda', 'Amazon S3'],
+      },
+      {
+        id: 'video-proctoring',
+        title: 'Video Proctoring Engine – AI Exam Monitoring',
+        type: 'POC',
+        shortDesc: 'AI-based exam surveillance system detecting cheating patterns via facial and audio analysis.',
+        description: `Video Proctoring Engine is an AI-based exam monitoring system (POC) engineered to detect cheating patterns and suspicious activities during online examinations using a combination of computer vision and audio classification.
+
+The facial analysis module leverages MediaPipe to track eye movements, gaze direction, and face orientation in real time, flagging abnormal behaviors such as prolonged gaze shifts or face-looking-away patterns. A parallel audio classifier categorizes voice patterns, identifying conversations or unusual sounds during the exam session with 94% accuracy.
+
+Additional detection layers integrate YOLO v5 object detection to identify unauthorized materials — such as phones, books, or other devices — appearing in the camera frame during the test.
+
+Together, these modules form a multi-signal surveillance pipeline that produces confidence-scored alerts for proctors, enabling automated flagging of high-risk behavior with explainable evidence for human review.`,
+        tech: ['MediaPipe', 'YOLOv5', 'Computer Vision', 'Audio Classification', 'Python', 'OpenCV'],
+      },
+      {
         id: 'thryve-labs',
         title: 'Thryve Labs – Virtual Assistant',
-        type: 'Client Engagement',
+        type: 'PROD',
         shortDesc: 'Intelligent AI virtual assistant with real-time intent analysis and AWS Bedrock integration.',
         description: `Thryve Labs is an enterprise-grade AI Virtual Assistant platform built for a client to automate intelligent customer interactions at scale. The system was designed to understand natural language queries, determine user intent in real time, and generate contextually accurate responses using large foundation models hosted on Amazon Bedrock.
 
@@ -25,7 +67,7 @@ The project also included a feedback loop mechanism where low-confidence respons
       {
         id: 'chaotic',
         title: 'Chaotic – Character Enhancement System',
-        type: 'Client Engagement',
+        type: 'POC',
         shortDesc: 'AI-powered anime character image restoration and enhancement using Qwen 20B model.',
         description: `Chaotic is an AI-powered image enhancement and restoration system developed for a media client dealing with large volumes of legacy anime episode assets. The primary goal was to upgrade low-resolution, visually degraded character images to high-quality outputs while preserving the original character identity and art style.
 
@@ -41,7 +83,7 @@ The backend was built with FastAPI, exposing endpoints for job submission, statu
       {
         id: 'neuralhub',
         title: 'NeuralHub – Training & Inference Automation',
-        type: 'Internal Project',
+        type: 'PROD',
         shortDesc: 'Internal automation platform for ML model training and inference workflows using Gradio.',
         description: `NeuralHub is an internal automation platform built at Ava Software to streamline the end-to-end lifecycle of machine learning model training and inference. The platform was created to reduce the manual overhead involved in configuring, launching, and monitoring ML experiments across different model architectures and datasets.
 
@@ -62,7 +104,7 @@ NeuralHub significantly reduced the time-to-experiment for the internal AI team,
       {
         id: 'ck-ticketing',
         title: 'CK Ticketing Tool',
-        type: 'Internal Engagement',
+        type: 'PROD',
         shortDesc: 'Custom ticketing system with dynamic workflows, multi-level approvals and automated notifications.',
         description: `CK Ticketing Tool is a fully custom-built internal ticketing and workflow management system developed for Hema's Enterprise Private Limited to streamline their operational request handling and approval processes.
 
@@ -80,7 +122,7 @@ The frontend was built using Bootstrap for a clean, responsive UI and vanilla Ja
       {
         id: 'luminar',
         title: 'Luminar – Task Management System',
-        type: 'Internal Engagement',
+        type: 'PROD',
         shortDesc: 'Role-based project management platform with AWS S3 storage, OAuth auth and real-time monitoring.',
         description: `Luminar is a comprehensive role-based project and task management platform developed for Hema's Enterprise Private Limited to centralize team collaboration, task tracking, and performance oversight across multiple projects and departments.
 
@@ -128,7 +170,7 @@ const Projects = () => {
                 >
                   <div className="project-content">
                     <div className="project-meta">
-                      <span className={`project-type ${project.type === 'Internal Project' ? 'internal' : 'client'}`}>
+                      <span className={`project-type ${project.type === 'POC' ? 'poc' : 'prod'}`}>
                         {project.type}
                       </span>
                     </div>

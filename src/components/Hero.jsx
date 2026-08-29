@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Hero.css';
-import resumePdf from '../assets/RAVI KUMAR .D(AI).pdf';
+import resumePdf from '../assets/Ravi_Kumar_AI_Resume.pdf';
 
 const Hero = () => {
   return (
