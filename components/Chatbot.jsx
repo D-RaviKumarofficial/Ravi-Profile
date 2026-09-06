@@ -11,7 +11,7 @@ const USER = 'user';
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: BOT, text: chatbotData.start.message }
+    { role: BOT, text: chatbotData.start.message, skipContext: true }
   ]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
@@ -40,13 +40,16 @@ export default function Chatbot() {
 
     setInput('');
 
-    const history = messages
-      .filter((m) => m.text)
-      .map((m) => ({
-        role: m.role === BOT ? 'assistant' : 'user',
-        content: m.text,
-      }))
-      .slice(-20);
+    const history = [
+      ...messages
+        .filter((m) => m.text && !m.skipContext)
+        .map((m) => ({
+          role: m.role === BOT ? 'assistant' : 'user',
+          content: m.text,
+        }))
+        .slice(-20),
+      { role: 'user', content: text },
+    ];
 
     setMessages((prev) => [
       ...prev,
