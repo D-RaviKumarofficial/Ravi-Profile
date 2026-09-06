@@ -2,58 +2,11 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import chatbotData from '../data/chatbotData';
+import { streamAssistantReply } from '../lib/groq';
 import '../styles/Chatbot.css';
 
 const BOT = 'bot';
 const USER = 'user';
-const STREAM_DELAY = 18; // ms per character
-
-function getTimeGreeting() {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good Morning';
-  if (hour < 17) return 'Good Afternoon';
-  return 'Good Evening';
-}
-
-const GREETINGS = [
-  'hi', 'hello', 'hey', 'hii', 'helo',
-  'good morning', 'good afternoon', 'good evening', 'good night',
-  'how are you', 'how r you', 'how are u', 'whats up', "what's up", 'sup'
-];
-
-function getGreetingResponse(text) {
-  const t = text.toLowerCase().trim();
-  const matched = GREETINGS.some(g => t === g || t.startsWith(g));
-  if (!matched) return null;
-  const tod = getTimeGreeting();
-  if (t.includes('how are you') || t.includes('how r you') || t.includes('how are u')) {
-    return `${tod}! 😊 I'm doing great and ready to help. I'm here to tell you all about Ravi Kumar D — his skills, projects, and experience. How can I assist you?`;
-  }
-  return `${tod}! 👋 Great to have you here. I'm Ravi's AI assistant — your go-to guide for everything about Ravi Kumar D.\n\nFeel free to explore his skills, projects, or experience. Want to reach him directly?\n📧 ravikumar.offical2003@gmail.com\n📞 7667009461\n\nHow can I help you today?`;
-}
-
-function getResponse(input) {
-  const text = input.toLowerCase().trim();
-
-  const greetingReply = getGreetingResponse(text);
-  if (greetingReply) {
-    return { message: greetingReply, options: chatbotData.start.options };
-  }
-
-  // Exact key match (button clicks)
-  if (chatbotData.nodes[input]) {
-    return { message: chatbotData.nodes[input].message, options: chatbotData.nodes[input].options };
-  }
-
-  // Pattern match (free-typed input)
-  for (const node of Object.values(chatbotData.nodes)) {
-    if (node.patterns?.some(p => p.test(text))) {
-      return { message: node.message, options: node.options };
-    }
-  }
-
-  return { message: chatbotData.fallback.answer, options: chatbotData.start.options };
-}
 
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
@@ -63,55 +16,71 @@ export default function Chatbot() {
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
   const bottomRef = useRef(null);
-  const streamRef = useRef(null);
+  const abortRef = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, open]);
 
-  const streamBotMessage = useCallback((fullText, options) => {
-    setStreaming(true);
-    // Add empty bot message placeholder
-    setMessages(prev => [...prev, { role: BOT, text: '', options: null, streaming: true }]);
+  // Cleanup on unmount — abort any in-flight streaming request
+  useEffect(() => () => abortRef.current?.abort(), []);
 
-    let i = 0;
-    const tick = () => {
-      i++;
-      setMessages(prev => {
-        const updated = [...prev];
-        const last = { ...updated[updated.length - 1], text: fullText.slice(0, i) };
-        updated[updated.length - 1] = last;
-        return updated;
-      });
-      if (i < fullText.length) {
-        streamRef.current = setTimeout(tick, STREAM_DELAY);
-      } else {
-        // Streaming done — attach options
-        setMessages(prev => {
-          const updated = [...prev];
-          updated[updated.length - 1] = { ...updated[updated.length - 1], options, streaming: false };
-          return updated;
-        });
-        setStreaming(false);
-      }
-    };
-    streamRef.current = setTimeout(tick, STREAM_DELAY);
+  const appendToken = useCallback((token) => {
+    setMessages((prev) => {
+      const updated = [...prev];
+      const last = updated[updated.length - 1];
+      updated[updated.length - 1] = { ...last, text: (last.text || '') + token };
+      return updated;
+    });
   }, []);
 
-  const sendMessage = useCallback((text) => {
-    if (!text.trim() || streaming) return;
-    const response = getResponse(text);
-    setMessages(prev => [...prev, { role: USER, text }]);
+  const sendMessage = useCallback(async (rawText) => {
+    const text = (rawText || '').trim();
+    if (!text || streaming) return;
+
     setInput('');
-    streamBotMessage(response.message, response.options);
-  }, [streaming, streamBotMessage]);
+
+    const history = messages
+      .filter((m) => m.text)
+      .map((m) => ({
+        role: m.role === BOT ? 'assistant' : 'user',
+        content: m.text,
+      }))
+      .slice(-20);
+
+    setMessages((prev) => [
+      ...prev,
+      { role: USER, text },
+      { role: BOT, text: '', streaming: true },
+    ]);
+    setStreaming(true);
+
+    abortRef.current = new AbortController();
+    try {
+      await streamAssistantReply(history, {
+        onToken: appendToken,
+        signal: abortRef.current.signal,
+      });
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1] = { ...updated[updated.length - 1], streaming: false };
+        return updated;
+      });
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1] = { role: BOT, text: `⚠️ ${err.message}`, streaming: false };
+        return updated;
+      });
+    } finally {
+      setStreaming(false);
+    }
+  }, [messages, streaming, appendToken]);
 
   const handleKey = (e) => {
     if (e.key === 'Enter') sendMessage(input);
   };
-
-  // Cleanup on unmount
-  useEffect(() => () => clearTimeout(streamRef.current), []);
 
   return (
     <div className="chatbot-wrapper">

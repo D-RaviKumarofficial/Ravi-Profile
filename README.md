@@ -2,6 +2,22 @@
 
 This project is a [Next.js](https://nextjs.org) (App Router) portfolio built with `output: 'export'`. Static files are generated into `out/` and deployed to Firebase Hosting.
 
+## Chatbot Setup (Groq API)
+
+The chatbot is powered by the [Groq API](https://console.groq.com) and calls it directly from the browser (the key is exposed in the client bundle — perfect for a portfolio).
+
+1. Create a free key at https://console.groq.com/keys
+2. Copy `.env.example` to `.env.local` and paste your key:
+
+```
+NEXT_PUBLIC_GROQ_API_KEY=your_groq_api_key_here
+NEXT_PUBLIC_GROQ_MODEL=llama-3.3-70b-versatile
+```
+
+3. Prepend with `NEXT_PUBLIC_` so Next.js inlines it at build time.
+
+For GitHub Actions deploys, add the key as a repo secret named `NEXT_PUBLIC_GROQ_API_KEY` (Settings → Secrets and variables → Actions).
+
 ## Step 1: Install Firebase CLI
 ```bash
 npm install -g firebase-tools

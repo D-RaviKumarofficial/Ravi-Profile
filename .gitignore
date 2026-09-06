@@ -19,7 +19,9 @@ next-env.d.ts
 dist
 dist-ssr
 
-*.local
+# Environment variables (never commit real keys)
+.env*
+!.env.example
 
 # Editor directories and files
 .vscode/*
