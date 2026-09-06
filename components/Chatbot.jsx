@@ -11,7 +11,7 @@ const USER = 'user';
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: BOT, text: chatbotData.start.message, options: chatbotData.start.options }
+    { role: BOT, text: chatbotData.start.message }
   ]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
@@ -94,15 +94,6 @@ export default function Chatbot() {
             {messages.map((msg, i) => (
               <div key={i} className={`chatbot-msg ${msg.role}`}>
                 <span>{msg.text}{msg.streaming && <span className="chatbot-cursor">▋</span>}</span>
-                {msg.options && !msg.streaming && (
-                  <div className="chatbot-options">
-                    {msg.options.map(opt => (
-                      <button key={opt} onClick={() => sendMessage(opt)} className="chatbot-option-btn" disabled={streaming}>
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                )}
               </div>
             ))}
             <div ref={bottomRef} />
