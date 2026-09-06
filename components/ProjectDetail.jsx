@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { groups } from './Projects';
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import '../styles/ProjectDetail.css';
+import { groups } from '../data/projects';
 
 const allProjects = groups.flatMap((g) =>
   g.projects.map((p) => ({ ...p, org: g.org }))
 );
 
-const ProjectDetail = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+const ProjectDetail = ({ id }) => {
+  const router = useRouter();
   const project = allProjects.find((p) => p.id === id);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const ProjectDetail = () => {
     return (
       <div className="detail-not-found">
         <p>Project not found.</p>
-        <button onClick={() => navigate('/#projects')}>← Back</button>
+        <button onClick={() => router.push('/')}>← Back</button>
       </div>
     );
   }
@@ -28,7 +29,7 @@ const ProjectDetail = () => {
   return (
     <div className="detail-page">
       <div className="detail-container">
-        <button className="detail-back" onClick={() => navigate(-1)}>
+        <button className="detail-back" onClick={() => router.back()}>
           ← Back to Projects
         </button>
 

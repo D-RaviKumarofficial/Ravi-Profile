@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+'use client';
+
+import { useState, useRef, useEffect, useCallback } from 'react';
 import chatbotData from '../data/chatbotData';
 import '../styles/Chatbot.css';
 

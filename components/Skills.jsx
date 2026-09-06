@@ -1,4 +1,3 @@
-import React from 'react';
 import '../styles/About.css'; // reusing some structural classes if needed
 import { FaHtml5, FaCss3Alt, FaBootstrap, FaLaravel, FaPhp, FaPython, FaAws, FaFigma, FaJira, FaGithub, FaRobot } from 'react-icons/fa';
 import { SiJquery, SiCodeigniter, SiMysql, SiPostgresql, SiFastapi, SiTerraform, SiJavascript, SiPostman, SiMongodb } from 'react-icons/si';

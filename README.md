@@ -1,4 +1,6 @@
-# Firebase Deployment Guide
+# Firebase Deployment Guide (Next.js Static Export)
+
+This project is a [Next.js](https://nextjs.org) (App Router) portfolio built with `output: 'export'`. Static files are generated into `out/` and deployed to Firebase Hosting.
 
 ## Step 1: Install Firebase CLI
 ```bash
@@ -21,7 +23,7 @@ firebase init
 ```
 - Select **Hosting**
 - Create a new project or use existing project: `profile-ravi`
-- Public directory: `dist`
+- Public directory: `out`
 - Configure as single-page app: `Yes`
 - Set up GitHub workflow: `Yes`
 
@@ -35,7 +37,12 @@ firebase init
 npm run build
 ```
 
-## Step 7: Deploy to Firebase
+## Step 7: Local Preview of the Export
+```bash
+npx serve out
+```
+
+## Step 8: Deploy to Firebase
 ```bash
 firebase deploy
 ```

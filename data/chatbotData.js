@@ -1,6 +1,6 @@
 const chatbotData = {
   start: {
-    message: "👋 Hey there! I'm Ravi's \ assistant. What would you like to explore about ravi?",
+    message: "👋 Hey there! I'm Ravi's assistant. What would you like to explore about ravi?",
     options: [
       "Who is Ravi?",
       "Technical Skills",

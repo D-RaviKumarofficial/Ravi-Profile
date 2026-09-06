@@ -1,6 +1,4 @@
-import React from 'react';
 import '../styles/About.css';
-import profileImg from '../assets/ravi.jpeg';
 
 const About = () => {
   return (
@@ -23,7 +21,7 @@ const About = () => {
         
         <div className="about-image-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
           <img 
-            src={profileImg} 
+            src="/ravi.jpeg" 
             alt="Ravi Kumar D" 
             style={{ 
               maxWidth: '350px', 

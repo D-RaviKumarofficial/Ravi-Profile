@@ -1,6 +1,4 @@
-import React from 'react';
 import '../styles/Hero.css';
-import resumePdf from '../assets/Ravi_Kumar_AI_Resume.pdf';
 
 const Hero = () => {
   return (
@@ -14,7 +12,7 @@ const Hero = () => {
             AI/ML Engineer <br /><span style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', fontWeight: 'normal' }}>(Specialized in Deep Learning - Model Finetuning)</span>
           </p>
           <div className="hero-actions" style={{ marginTop: '2.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-            <a href={resumePdf} download="RAVI_KUMAR_D_AI.pdf" className="btn btn-primary" style={{ padding: '1.2rem 3rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+            <a href="/Ravi_Kumar_AI_Resume.pdf" download="RAVI_KUMAR_D_AI.pdf" className="btn btn-primary" style={{ padding: '1.2rem 3rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>

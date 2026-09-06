@@ -1,36 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './styles/App.css';
-import Sidebar from './components/Sidebar';
-import BottomBar from './components/BottomBar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Experience from './components/Experience';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import Chatbot from './components/Chatbot';
-import ProjectDetail from './components/ProjectDetail';
-import clickSound from './assets/game click.wav';
-import hoverSound from './assets/hover.mp3';
+'use client';
 
-const clickAudio = new Audio(clickSound);
-clickAudio.volume = 0.5;
+import { useState, useEffect, useRef } from 'react';
+import Sidebar from './Sidebar';
+import BottomBar from './BottomBar';
+import Hero from './Hero';
+import About from './About';
+import Experience from './Experience';
+import Skills from './Skills';
+import Projects from './Projects';
+import Contact from './Contact';
+import Chatbot from './Chatbot';
 
-const hoverAudio = new Audio(hoverSound);
-hoverAudio.volume = 0.25;
-
-function Portfolio({ soundOn, toggleSound }) {
+export default function PortfolioContent() {
   const [activeSection, setActiveSection] = useState('home');
+  const [soundOn, setSoundOn] = useState(false);
+  const toggleSound = () => setSoundOn((prev) => !prev);
+
+  const clickAudioRef = useRef(null);
+  const hoverAudioRef = useRef(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (!clickAudioRef.current) {
+      clickAudioRef.current = new Audio('/game click.wav');
+      clickAudioRef.current.volume = 0.5;
+    }
+    if (!hoverAudioRef.current) {
+      hoverAudioRef.current = new Audio('/hover.mp3');
+      hoverAudioRef.current.volume = 0.25;
+    }
+
     // Global click sound
     const handleClick = (e) => {
       if (!soundOn) return;
       const tag = e.target.tagName;
       if (tag === 'A' || tag === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
-        clickAudio.currentTime = 0;
-        clickAudio.play().catch(() => {});
+        clickAudioRef.current.currentTime = 0;
+        clickAudioRef.current.play().catch(() => {});
       }
     };
 
@@ -41,8 +48,8 @@ function Portfolio({ soundOn, toggleSound }) {
       const target = e.target.closest('a, button');
       if (!target || target === lastHovered) return;
       lastHovered = target;
-      hoverAudio.currentTime = 0;
-      hoverAudio.play().catch(() => {});
+      hoverAudioRef.current.currentTime = 0;
+      hoverAudioRef.current.play().catch(() => {});
     };
     const handleMouseOut = (e) => {
       const target = e.target.closest('a, button');
@@ -100,19 +107,3 @@ function Portfolio({ soundOn, toggleSound }) {
     </>
   );
 }
-
-function App() {
-  const [soundOn, setSoundOn] = useState(false);
-  const toggleSound = () => setSoundOn(prev => !prev);
-
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Portfolio soundOn={soundOn} toggleSound={toggleSound} />} />
-        <Route path="/project/:id" element={<ProjectDetail />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default App;
